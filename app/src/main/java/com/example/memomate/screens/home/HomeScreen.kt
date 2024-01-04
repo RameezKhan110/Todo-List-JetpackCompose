@@ -2,6 +2,7 @@ package com.example.memomate.screens.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -10,50 +11,53 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.memomate.model.NotesModel
-import kotlin.random.Random
+import com.example.memomate.screens.add_note.CreateNoteScreen
 
 
 @Composable
-fun HomeScreen() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize(), content = {
-                items(getDummyData()) { note ->
-                    NotesListItem(title = note.title, desc = note.desc)
-                }
-            })
+fun HomeScreen(navController: NavController) {
 
-        FloatingActionButton(
-            shape = CircleShape,
-            onClick = {
-                // Handle the FAB click (e.g., navigate to compose screen)
-            },
+    Column(modifier = Modifier.background(Color.Black)) {
+        Box(
             modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .size(56.dp)
-                .background(Color.Black)
+                .fillMaxSize()
+                .padding(16.dp)
         ) {
-            Icon(imageVector = Icons.Default.Add, contentDescription = null, tint = Color.Blue)
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize(), content = {
+                    items(getDummyData()) { note ->
+                        NotesListItem(title = note.title, desc = note.desc)
+                    }
+                })
+
+            FloatingActionButton(
+                shape = CircleShape,
+                onClick = {
+                    navController.navigate("CreateNoteScreen")
+                },
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .size(56.dp)
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = null, tint = Color.Blue)
+            }
         }
     }
+
 }
 
 private fun getDummyData(): ArrayList<NotesModel> {
@@ -80,9 +84,24 @@ private fun getDummyData(): ArrayList<NotesModel> {
     return list
 }
 
+@Composable
+fun NavigationComponent() {
+    val navController = rememberNavController()
+
+    NavHost(navController = navController, startDestination = "HomeScreen") {
+        composable("HomeScreen") {
+            HomeScreen(navController = navController)
+        }
+        composable("CreateNoteScreen") {
+            CreateNoteScreen()
+        }
+    }
+}
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewNotesItem() {
 //    NotesListItem("gsgsdgsd", "aasdsaasdasd")
-    HomeScreen()
+//    HomeScreen()
+    NavigationComponent()
 }
