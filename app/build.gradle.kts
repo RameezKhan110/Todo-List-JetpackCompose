@@ -69,5 +69,9 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation("androidx.navigation:navigation-compose:2.7.6")
 //    implementation("androidx.compose.material:material-icons-extended:2.7.6")
+    implementation("androidx.room:room-runtime:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-compiler:2.6.1")
+
 
 }
