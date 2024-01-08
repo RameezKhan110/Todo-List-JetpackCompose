@@ -1,5 +1,4 @@
 package com.example.memomate.screens.home
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,11 +20,18 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.memomate.model.NotesModel
+import com.example.memomate.screens.add_note.CreateNoteScreen
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,7 +40,7 @@ import com.example.memomate.model.NotesModel
 
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
 
     Column(
         modifier = Modifier
@@ -88,6 +94,12 @@ fun HomeScreen() {
                     }
                 })
 
+            FloatingActionButton(
+                shape = CircleShape,
+                onClick = {
+                    navController.navigate("CreateNoteScreen")
+                },
+                modifier = Modifier
             Spacer(modifier = Modifier.align(Alignment.BottomEnd).width(10.dp).height(20.dp))
 
             FloatingActionButton(
@@ -102,7 +114,6 @@ fun HomeScreen() {
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = null, tint = Color.Blue)
             }
-
         }
     }
 
@@ -132,9 +143,24 @@ private fun getDummyData(): ArrayList<NotesModel> {
     return list
 }
 
+@Composable
+fun NavigationComponent() {
+    val navController = rememberNavController()
+
+    NavHost(navController = navController, startDestination = "HomeScreen") {
+        composable("HomeScreen") {
+            HomeScreen(navController = navController)
+        }
+        composable("CreateNoteScreen") {
+            CreateNoteScreen()
+        }
+    }
+}
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewNotesItem() {
 //    NotesListItem("gsgsdgsd", "aasdsaasdasd")
-    HomeScreen()
+//    HomeScreen()
+    NavigationComponent()
 }
