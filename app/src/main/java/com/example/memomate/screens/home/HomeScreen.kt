@@ -97,8 +97,6 @@ fun HomeScreen(navController: NavController) {
                     }
                 })
 
-//            Spacer(modifier = Modifier.align(Alignment.BottomEnd).width(10.dp).height(20.dp))
-
             FloatingActionButton(
                 shape = CircleShape,
                 onClick = {
@@ -142,7 +140,7 @@ private fun getDummyData(): ArrayList<NotesModel> {
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun Navigate_HomeToCreateNote() {
+fun NavigationComponent() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "HomeScreen") {
@@ -157,20 +155,6 @@ fun Navigate_HomeToCreateNote() {
         }
     }
 }
-//@Composable
-//fun Navigate_HomeToDetailNote() {
-//    val navController = rememberNavController()
-//
-//    NavHost(navController = navController, startDestination = "HomeScreen") {
-//        composable("HomeScreen") {
-//            HomeScreen(navController = navController)
-//        }
-//        composable("NoteDetailScreen") {
-//            NoteDetailScreen()
-//        }
-//    }
-//}
-
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true, showSystemUi = true)
@@ -178,5 +162,5 @@ fun Navigate_HomeToCreateNote() {
 fun PreviewNotesItem() {
 //    NotesListItem("gsgsdgsd", "aasdsaasdasd")
 //    HomeScreen()
-    Navigate_HomeToCreateNote()
+    NavigationComponent()
 }
