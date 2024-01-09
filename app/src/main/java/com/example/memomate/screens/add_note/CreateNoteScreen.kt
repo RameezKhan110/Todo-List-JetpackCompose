@@ -2,6 +2,7 @@ package com.example.memomate.screens.add_note
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,11 +33,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.memomate.R
 import com.example.memomate.room.Notes
 import com.example.memomate.viewmodel.NotesViewModel
 import java.time.format.TextStyle
@@ -68,9 +72,10 @@ fun CreateNoteScreen(navController: NavController) {
                     .background(Color.DarkGray, shape = RoundedCornerShape(5.dp))
                     .padding(5.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "back",
-                    tint = Color.White,
+                Image(
+                    painter = painterResource(id = R.drawable.leftchevron),
+                    contentDescription = "left chevron",
+                    colorFilter = ColorFilter.tint(Color.White)
                 )
             }
 
@@ -82,10 +87,10 @@ fun CreateNoteScreen(navController: NavController) {
                     .padding(5.dp)
 
             ) {
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowLeft,
-                    contentDescription = "visibility",
-                    tint = Color.White,
+                Image(
+                    painter = painterResource(id = R.drawable.visibility),
+                    contentDescription = "visible",
+                    colorFilter = ColorFilter.tint(Color.White)
                 )
             }
 
@@ -101,9 +106,10 @@ fun CreateNoteScreen(navController: NavController) {
                         navController.popBackStack()
                     }
             ) {
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "save",
-                    tint = Color.White,
+                Image(
+                    painter = painterResource(id = R.drawable.save),
+                    contentDescription = "save",
+                    colorFilter = ColorFilter.tint(Color.White)
                 )
             }
         }
