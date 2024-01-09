@@ -5,11 +5,9 @@ import kotlin.random.Random
 
 object Extensions {
     fun getRandomColor(): Color {
-        return Color(
-            red = Random.nextFloat(),
-            green = Random.nextFloat(),
-            blue = Random.nextFloat(),
-        )
+        val colorCodes = listOf("#FD99FF", "#FF9E9E", "#91F48F", "#FFF599", "#9EFFFF", "#B69CFF")
+        val randomColorCode = colorCodes[Random.nextInt(colorCodes.size)]
+        return Color(android.graphics.Color.parseColor(randomColorCode))
     }
 
 }

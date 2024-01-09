@@ -1,5 +1,6 @@
 package com.example.memomate.screens.detail_note
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,11 +28,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.memomate.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,9 +53,10 @@ fun NoteDetailScreen() {
                     .background(Color.DarkGray, shape = RoundedCornerShape(5.dp))
                     .padding(5.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "back",
-                    tint = Color.White,
+                Image(
+                    painter = painterResource(id = R.drawable.leftchevron),
+                    contentDescription = "left chevron",
+                    colorFilter = ColorFilter.tint(Color.White)
                 )
             }
 
@@ -62,9 +67,10 @@ fun NoteDetailScreen() {
                     .background(Color.DarkGray, shape = RoundedCornerShape(5.dp))
                     .padding(5.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Default.Edit, contentDescription = "save",
-                    tint = Color.White,
+                Image(
+                    painter = painterResource(id = R.drawable.edit),
+                    contentDescription = "edit",
+                    colorFilter = ColorFilter.tint(Color.White)
                 )
             }
         }

@@ -2,6 +2,7 @@ package com.example.memomate.screens.home
 import android.os.Build
 import android.provider.ContactsContract.CommonDataKinds.Note
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,6 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.FloatingActionButton
@@ -29,6 +31,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,6 +41,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.memomate.R
 import com.example.memomate.model.NotesModel
 import com.example.memomate.screens.add_note.CreateNoteScreen
 import com.example.memomate.screens.detail_note.NoteDetailScreen
@@ -69,10 +74,10 @@ fun HomeScreen(navController: NavController) {
                     .background(Color.DarkGray, shape = RoundedCornerShape(5.dp))
                     .padding(5.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = "visibility",
-                    tint = Color.White,
+                Image(
+                    painter = painterResource(id = R.drawable.search),
+                    contentDescription = "search",
+                    colorFilter = ColorFilter.tint(Color.White)
                 )
             }
 
@@ -83,9 +88,10 @@ fun HomeScreen(navController: NavController) {
                     .background(Color.DarkGray, shape = RoundedCornerShape(5.dp))
                     .padding(5.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "save",
-                    tint = Color.White,
+                Image(
+                    painter = painterResource(id = R.drawable.info),
+                    contentDescription = "info",
+                    colorFilter = ColorFilter.tint(Color.White)
                 )
             }
         }
@@ -118,30 +124,6 @@ fun HomeScreen(navController: NavController) {
         }
     }
 
-}
-
-private fun getDummyData(): ArrayList<NotesModel> {
-
-    val list = arrayListOf<NotesModel>()
-
-    list.add(
-        NotesModel(
-            "Im learning compose and this app will going to be made in compose",
-            "I have to learn compose"
-        )
-    )
-    list.add(NotesModel("Work", "I have to learn compose"))
-    list.add(NotesModel("Work", "I have to learn compose"))
-    list.add(NotesModel("Work", "I have to learn compose"))
-    list.add(NotesModel("Work", "I have to learn compose"))
-    list.add(NotesModel("Work", "I have to learn compose"))
-    list.add(NotesModel("Work", "I have to learn compose"))
-    list.add(NotesModel("Work", "I have to learn compose"))
-    list.add(NotesModel("Work", "I have to learn compose"))
-    list.add(NotesModel("Work", "I have to learn compose"))
-    list.add(NotesModel("Work", "I have to learn compose"))
-
-    return list
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class NotesViewModel : ViewModel() {
 
-    private val dao = NotesDatabase.getDatabase(ApplicationClass.getContext()).notesDao()
+    private val dao = NotesDatabase.getDatabase().notesDao()
     private val notesRepo = NotesRepository(dao)
 
     fun createNote(note: Notes) = viewModelScope.launch {

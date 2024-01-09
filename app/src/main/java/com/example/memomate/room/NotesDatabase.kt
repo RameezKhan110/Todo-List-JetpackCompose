@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.memomate.ApplicationClass
 
 @Database(entities = [Notes::class], version = 1)
 abstract class NotesDatabase : RoomDatabase() {
@@ -13,12 +14,12 @@ abstract class NotesDatabase : RoomDatabase() {
     companion object {
 
         private var INSTANCE: NotesDatabase? = null
-        fun getDatabase(context: Context): NotesDatabase {
+        fun getDatabase(): NotesDatabase {
             synchronized(this) {
                 var instance = INSTANCE
                 if (instance == null) {
                     instance = Room.databaseBuilder(
-                        context.applicationContext,
+                        ApplicationClass.application.baseContext,
                         NotesDatabase::class.java,
                         "notes_database"
                     ).build()
