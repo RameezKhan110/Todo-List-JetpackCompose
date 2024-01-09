@@ -15,7 +15,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -101,10 +104,10 @@ fun CreateNoteScreen(navController: NavController) {
                 modifier = Modifier
                     .background(Color.DarkGray, shape = RoundedCornerShape(5.dp))
                     .padding(5.dp)
-                    .clickable {
-                        viewModel.createNote(Notes(0, title, desc))
-                        navController.popBackStack()
-                    }
+//                    .clickable {
+//                        viewModel.createNote(Notes(0, title, desc))
+//                        navController.popBackStack()
+//                    }
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.save),
@@ -114,59 +117,198 @@ fun CreateNoteScreen(navController: NavController) {
             }
         }
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
-
-        TextField(
-            value = title,
-            onValueChange = { title = it },
-            textStyle = androidx.compose.ui.text.TextStyle(
-                fontSize = 30.sp
-            ),
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color.Black,
-                textColor = Color.White,
-                cursorColor = Color.White,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-            ),
+        Box(
             modifier = Modifier
-                .fillMaxWidth(),
-            placeholder = {
-                Text(text = "Give title", color = Color.DarkGray, fontSize = 30.sp)
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .background(color = Color.Black)
+        ) {
+            if (title.isEmpty()) {
+                Text(
+                    text = "Title Goes Here",
+                    color = Color.DarkGray,
+                    fontSize = 30.sp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = Color.Black)
+                )
             }
+
+            BasicTextField(
+                value = title,
+                onValueChange = { newText -> title = newText },
+                cursorBrush = SolidColor(Color.White),
+                textStyle = androidx.compose.ui.text.TextStyle(color = Color.White, fontSize = 30.sp),
+                modifier = Modifier
+                    .fillMaxWidth()
             )
+        }
 
-//        Spacer(modifier = Modifier.height(5.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
-        TextField(
-            value = desc,
-            onValueChange = { desc = it },
-            textStyle = androidx.compose.ui.text.TextStyle(
-                fontSize = 25.sp
-            ),
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color.Black,
-                textColor = Color.White,
-                cursorColor = Color.White,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-            ),
-            modifier = Modifier.fillMaxWidth(),
-            placeholder = {
-                Text(text = "Give Description", color = Color.DarkGray, fontSize = 25.sp)
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .background(color = Color.Black)
+        ) {
+            if (desc.isEmpty()) {
+                Text(
+                    text = "Add Your Thoughts...",
+                    color = Color.DarkGray,
+                    fontSize = 25.sp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = Color.Black)
+                )
             }
 
-        )
+            BasicTextField(
+                value = desc,
+                onValueChange = { newText -> desc = newText },
+                cursorBrush = SolidColor(Color.White),
+                textStyle = androidx.compose.ui.text.TextStyle(color = Color.White, fontSize = 25.sp),
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+        }
     }
 }
+
+@RequiresApi(Build.VERSION_CODES.O)
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CreateNoteScreen_Preview() {
+
+    var title by remember {
+        mutableStateOf("")
+    }
+
+    var desc by remember {
+        mutableStateOf("")
+    }
+    Column(
+        modifier = Modifier
+            .background(Color.Black)
+            .padding(vertical = 20.dp, horizontal = 10.dp)
+            .fillMaxSize()
+    ) {
+        Row(horizontalArrangement = Arrangement.End) {
+            Box(
+                modifier = Modifier
+                    .background(Color.DarkGray, shape = RoundedCornerShape(5.dp))
+                    .padding(5.dp)
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.leftchevron),
+                    contentDescription = "left chevron",
+                    colorFilter = ColorFilter.tint(Color.White)
+                )
+            }
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Box(
+                modifier = Modifier
+                    .background(Color.DarkGray, shape = RoundedCornerShape(5.dp))
+                    .padding(5.dp)
+
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.visibility),
+                    contentDescription = "visible",
+                    colorFilter = ColorFilter.tint(Color.White)
+                )
+            }
+
+            Spacer(modifier = Modifier.width(20.dp))
+
+
+            Box(
+                modifier = Modifier
+                    .background(Color.DarkGray, shape = RoundedCornerShape(5.dp))
+                    .padding(5.dp)
+//                    .clickable {
+//                        viewModel.createNote(Notes(0, title, desc))
+//                        navController.popBackStack()
+//                    }
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.save),
+                    contentDescription = "save",
+                    colorFilter = ColorFilter.tint(Color.White)
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        var text by remember { mutableStateOf("") }
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .background(color = Color.Black)
+        ) {
+            if (text.isEmpty()) {
+                Text(
+                    text = "Title Goes Here",
+                    color = Color.DarkGray,
+                    fontSize = 30.sp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = Color.Black)
+                )
+            }
+
+            BasicTextField(
+                value = text,
+                onValueChange = { newText -> text = newText },
+                cursorBrush = SolidColor(Color.White),
+                textStyle = androidx.compose.ui.text.TextStyle(color = Color.White, fontSize = 30.sp),
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .background(color = Color.Black)
+        ) {
+            if (text.isEmpty()) {
+                Text(
+                    text = "Add Your Thoughts...",
+                    color = Color.DarkGray,
+                    fontSize = 25.sp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = Color.Black)
+                )
+            }
+
+            BasicTextField(
+                value = text,
+                onValueChange = { newText -> text = newText },
+                cursorBrush = SolidColor(Color.White),
+                textStyle = androidx.compose.ui.text.TextStyle(color = Color.White, fontSize = 25.sp),
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+        }
+    }
+}
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewFunction() {
-    val navController = rememberNavController()
-    CreateNoteScreen(navController)
+    CreateNoteScreen_Preview()
 }
