@@ -25,6 +25,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,6 +45,9 @@ import com.example.memomate.viewmodel.NotesViewModel
 
 @Composable
 fun HomeScreen(navController: NavController) {
+
+    val viewModel = NotesViewModel()
+    val notesList = viewModel.getNotes.collectAsState()
 
     Column(
         modifier = Modifier
@@ -92,7 +96,7 @@ fun HomeScreen(navController: NavController) {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize(), content = {
-                    items(getDummyData()) { note ->
+                    items(notesList.value) { note ->
                         NotesListItem(title = note.title, desc = note.desc, onItemClick = {clickedItem ->
                             navController.navigate("NoteDetailScreen")
                         })
