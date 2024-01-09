@@ -1,5 +1,6 @@
 package com.example.memomate.screens.home
 import android.os.Build
+import android.provider.ContactsContract.CommonDataKinds.Note
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -38,6 +39,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.memomate.model.NotesModel
 import com.example.memomate.screens.add_note.CreateNoteScreen
 import com.example.memomate.screens.detail_note.NoteDetailScreen
+import com.example.memomate.viewmodel.NotesViewModel
 
 
 @Composable
@@ -141,6 +143,7 @@ private fun getDummyData(): ArrayList<NotesModel> {
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationComponent() {
+    val viewModel = NotesViewModel()
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "HomeScreen") {

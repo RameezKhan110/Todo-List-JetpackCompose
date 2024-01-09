@@ -16,14 +16,12 @@ abstract class NotesDatabase : RoomDatabase() {
         fun getDatabase(context: Context): NotesDatabase {
             synchronized(this) {
                 var instance = INSTANCE
-
                 if (instance == null) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         NotesDatabase::class.java,
-                        "employee_database"
-                    ).fallbackToDestructiveMigration()
-                        .build()
+                        "notes_database"
+                    ).build()
 
                     INSTANCE = instance
                 }
