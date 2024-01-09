@@ -1,5 +1,6 @@
 package com.example.memomate.room
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -9,14 +10,14 @@ import androidx.room.Update
 @Dao
 interface NotesDao {
     @Insert
-    fun createNote(notes: Notes)
+    suspend fun createNote(notes: Notes)
 
     @Query("SELECT * From Notes")
-    fun getAllNotes(): List<Notes>
+    fun getAllNotes(): LiveData<List<Notes>>
 
     @Update
-    fun updateNote(note: Notes)
+    suspend fun updateNote(note: Notes)
 
     @Delete
-    fun deleteNote(note: Notes)
+    suspend fun deleteNote(note: Notes)
 }

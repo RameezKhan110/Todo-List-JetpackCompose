@@ -3,6 +3,7 @@ package com.example.memomate.screens.add_note
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
@@ -33,14 +35,27 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.memomate.room.Notes
+import com.example.memomate.viewmodel.NotesViewModel
 import java.time.format.TextStyle
 
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreateNoteScreen() {
+fun CreateNoteScreen(navController: NavController) {
 
+    val viewModel = NotesViewModel()
+
+    var title by remember {
+        mutableStateOf("")
+    }
+
+    var desc by remember {
+        mutableStateOf("")
+    }
     Column(
         modifier = Modifier
             .background(Color.Black)
@@ -65,6 +80,7 @@ fun CreateNoteScreen() {
                 modifier = Modifier
                     .background(Color.DarkGray, shape = RoundedCornerShape(5.dp))
                     .padding(5.dp)
+
             ) {
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowLeft,
@@ -80,6 +96,10 @@ fun CreateNoteScreen() {
                 modifier = Modifier
                     .background(Color.DarkGray, shape = RoundedCornerShape(5.dp))
                     .padding(5.dp)
+                    .clickable {
+                        viewModel.createNote(Notes(0, title, desc))
+                        navController.popBackStack()
+                    }
             ) {
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "save",
@@ -90,13 +110,7 @@ fun CreateNoteScreen() {
 
         Spacer(modifier = Modifier.height(40.dp))
 
-        var title by remember {
-            mutableStateOf("My Title")
-        }
 
-        var desc by remember {
-            mutableStateOf("Type something...")
-        }
         TextField(
             value = title,
             onValueChange = { title = it },
@@ -105,17 +119,20 @@ fun CreateNoteScreen() {
             ),
             colors = TextFieldDefaults.textFieldColors(
                 containerColor = Color.Black,
-                textColor = Color.DarkGray,
-                cursorColor = Color.DarkGray,
+                textColor = Color.White,
+                cursorColor = Color.White,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
             ),
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            placeholder = {
+                Text(text = "Give title", color = Color.DarkGray, fontSize = 30.sp)
+            }
             )
 
-        Spacer(modifier = Modifier.height(30.dp))
+//        Spacer(modifier = Modifier.height(5.dp))
 
         TextField(
             value = desc,
@@ -125,13 +142,16 @@ fun CreateNoteScreen() {
             ),
             colors = TextFieldDefaults.textFieldColors(
                 containerColor = Color.Black,
-                textColor = Color.DarkGray,
-                cursorColor = Color.DarkGray,
+                textColor = Color.White,
+                cursorColor = Color.White,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
             ),
             modifier = Modifier.fillMaxWidth(),
+            placeholder = {
+                Text(text = "Give Description", color = Color.DarkGray, fontSize = 25.sp)
+            }
 
         )
     }
@@ -141,5 +161,6 @@ fun CreateNoteScreen() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewFunction() {
-    CreateNoteScreen()
+    val navController = rememberNavController()
+    CreateNoteScreen(navController)
 }

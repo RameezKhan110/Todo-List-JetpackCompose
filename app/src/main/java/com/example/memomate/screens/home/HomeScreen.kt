@@ -1,5 +1,6 @@
 package com.example.memomate.screens.home
 import android.os.Build
+import android.provider.ContactsContract.CommonDataKinds.Note
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -38,6 +39,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.memomate.model.NotesModel
 import com.example.memomate.screens.add_note.CreateNoteScreen
 import com.example.memomate.screens.detail_note.NoteDetailScreen
+import com.example.memomate.viewmodel.NotesViewModel
 
 
 @Composable
@@ -148,7 +150,7 @@ fun NavigationComponent() {
             HomeScreen(navController = navController)
         }
         composable("CreateNoteScreen") {
-            CreateNoteScreen()
+            CreateNoteScreen(navController)
         }
         composable("NoteDetailScreen") {
             NoteDetailScreen()
@@ -160,7 +162,6 @@ fun NavigationComponent() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewNotesItem() {
-//    NotesListItem("gsgsdgsd", "aasdsaasdasd")
-//    HomeScreen()
+
     NavigationComponent()
 }

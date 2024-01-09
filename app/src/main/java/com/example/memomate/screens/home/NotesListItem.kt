@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.memomate.utils.Extensions
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NotesListItem(title: String, desc: String, onItemClick: (String) -> Unit) {
     Card(
