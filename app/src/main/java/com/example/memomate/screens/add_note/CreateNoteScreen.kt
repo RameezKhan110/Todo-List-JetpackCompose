@@ -45,10 +45,9 @@ import java.time.format.TextStyle
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreateNoteScreen() {
+fun CreateNoteScreen(navController: NavController) {
 
     val viewModel = NotesViewModel()
-    val navController = rememberNavController()
 
     var title by remember {
         mutableStateOf("")
@@ -162,7 +161,6 @@ fun CreateNoteScreen() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewFunction() {
-//    val notesViewModel = NotesViewModel()
-//    val navController = rememberNavController()
-    CreateNoteScreen()
+    val navController = rememberNavController()
+    CreateNoteScreen(navController)
 }

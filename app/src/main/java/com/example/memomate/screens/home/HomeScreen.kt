@@ -143,7 +143,6 @@ private fun getDummyData(): ArrayList<NotesModel> {
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationComponent() {
-    val viewModel = NotesViewModel()
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "HomeScreen") {
@@ -151,7 +150,7 @@ fun NavigationComponent() {
             HomeScreen(navController = navController)
         }
         composable("CreateNoteScreen") {
-            CreateNoteScreen()
+            CreateNoteScreen(navController)
         }
         composable("NoteDetailScreen") {
             NoteDetailScreen()
@@ -163,7 +162,6 @@ fun NavigationComponent() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewNotesItem() {
-//    NotesListItem("gsgsdgsd", "aasdsaasdasd")
-//    HomeScreen()
+
     NavigationComponent()
 }
