@@ -25,6 +25,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -50,7 +52,13 @@ import com.example.memomate.viewmodel.NotesViewModel
 @Composable
 fun HomeScreen(notesViewModel: NotesViewModel, navController: NavController) {
 
+//    val notesList by remember {
+//        notesViewModel.getNotes
+//    }.collectAsState()
+    notesViewModel.getAllNotes()
     val notesList = notesViewModel.getNotes.collectAsState()
+
+
 
     Column(
         modifier = Modifier
@@ -101,12 +109,18 @@ fun HomeScreen(notesViewModel: NotesViewModel, navController: NavController) {
                 modifier = Modifier
                     .fillMaxSize(), content = {
                     items(notesList.value) { note ->
-                        NotesListItem(
-                            title = note.title,
-                            desc = note.desc,
-                            onItemClick = { clickedItem ->
-                                navController.navigate("NoteDetailScreen/${note.id}")
-                            })
+                        note?.let {
+                            NotesListItem(
+                                title = it.title,
+                                desc = note.desc,
+                                onItemClick = { clickedItem ->
+                                    navController.navigate("NoteDetailScreen/${note.id}")
+                                },
+                                onDeleteClick = {
+                                    notesViewModel.deleteNote(note)
+                                    notesViewModel.getAllNotes()
+                                })
+                        }
                     }
                 })
 

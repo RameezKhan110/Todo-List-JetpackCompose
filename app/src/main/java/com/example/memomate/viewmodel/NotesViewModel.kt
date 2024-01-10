@@ -22,18 +22,25 @@ class NotesViewModel : ViewModel() {
     private val notesRepo = NotesRepository(dao)
 
     var noteObj: Notes? = null
+
     private val _currentNote = MutableStateFlow<Notes?>(null)
     val currentNote: StateFlow<Notes?> = _currentNote
+
+    private val _getNotes = MutableStateFlow<List<Notes?>>(emptyList())
+    val getNotes: StateFlow<List<Notes?>> = _getNotes
 
 
     fun createNote(note: Notes) = viewModelScope.launch {
         notesRepo.createNote(note)
     }
 
-    val getNotes = flow {
-        val notesList = notesRepo.getAllNotes()
-        emit(notesList)
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+    fun getAllNotes() = viewModelScope.launch {
+        _getNotes.value = notesRepo.getAllNotes()
+    }
+//    val getNotes = flow {
+//        val notesList = notesRepo.getAllNotes()
+//        emit(notesList)
+//    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
     fun getNoteById(id: Int) = viewModelScope.launch {
         notesRepo.getNoteById(id).collect {
@@ -43,5 +50,9 @@ class NotesViewModel : ViewModel() {
 
     fun updateNote(note: Notes) = viewModelScope.launch {
         notesRepo.updateNote(note)
+    }
+
+    fun deleteNote(note: Notes) = viewModelScope.launch {
+        notesRepo.deleteNote(note)
     }
 }
