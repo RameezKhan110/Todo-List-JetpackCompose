@@ -21,6 +21,7 @@ class NotesViewModel : ViewModel() {
     private val dao = NotesDatabase.getDatabase().notesDao()
     private val notesRepo = NotesRepository(dao)
 
+    var noteObj: Notes? = null
     private val _currentNote = MutableStateFlow<Notes?>(null)
     val currentNote: StateFlow<Notes?> = _currentNote
 
@@ -38,5 +39,9 @@ class NotesViewModel : ViewModel() {
         notesRepo.getNoteById(id).collect {
             _currentNote.value = it
         }
+    }
+
+    fun updateNote(note: Notes) = viewModelScope.launch {
+        notesRepo.updateNote(note)
     }
 }

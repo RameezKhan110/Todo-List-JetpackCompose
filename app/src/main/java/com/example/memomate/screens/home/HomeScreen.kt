@@ -42,17 +42,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.memomate.R
-import com.example.memomate.room.Notes
 import com.example.memomate.screens.add_note.CreateNoteScreen
 import com.example.memomate.screens.detail_note.NoteDetailScreen
 import com.example.memomate.viewmodel.NotesViewModel
 
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(notesViewModel: NotesViewModel, navController: NavController) {
 
-    val viewModel: NotesViewModel = viewModel()
-    val notesList = viewModel.getNotes.collectAsState()
+    val notesList = notesViewModel.getNotes.collectAsState()
 
     Column(
         modifier = Modifier
@@ -132,22 +130,24 @@ fun HomeScreen(navController: NavController) {
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationComponent() {
+
+    val notesViewModel: NotesViewModel = viewModel()
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "HomeScreen") {
         composable("HomeScreen") {
-            HomeScreen(navController = navController)
+            HomeScreen(notesViewModel, navController = navController)
         }
 
         composable("CreateNoteScreen") {
-            CreateNoteScreen(navController)
+            CreateNoteScreen(notesViewModel, navController)
         }
         composable("NoteDetailScreen/{note_data}", arguments = listOf(navArgument("note_data") {
             type = NavType.IntType
         })) {
             val id = it.arguments?.getInt("note_data")
             if (id != null) {
-                NoteDetailScreen(id, navController)
+                NoteDetailScreen(notesViewModel, id, navController)
             }
         }
     }

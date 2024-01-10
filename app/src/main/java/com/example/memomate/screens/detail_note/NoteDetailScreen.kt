@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -25,18 +24,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.memomate.R
 import com.example.memomate.room.Notes
 import com.example.memomate.viewmodel.NotesViewModel
 
 @Composable
-fun NoteDetailScreen(id: Int, navController: NavController) {
+fun NoteDetailScreen(notesViewModel: NotesViewModel, id: Int, navController: NavController) {
 
-    val viewModel = NotesViewModel()
-    viewModel.getNoteById(id)
-    val note = viewModel.currentNote.collectAsState()
+    notesViewModel.getNoteById(id)
+    val note = notesViewModel.currentNote.collectAsState()
 
     Column(
         modifier = Modifier
@@ -64,6 +61,13 @@ fun NoteDetailScreen(id: Int, navController: NavController) {
                 modifier = Modifier
                     .background(Color.DarkGray, shape = RoundedCornerShape(5.dp))
                     .padding(5.dp)
+                    .clickable {
+                        val data = note.value
+                        if(data != null) {
+                            notesViewModel.noteObj = Notes(data.id, data.title, data.desc, true)
+                        }
+                        navController.navigate("CreateNoteScreen")
+                    }
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.edit),

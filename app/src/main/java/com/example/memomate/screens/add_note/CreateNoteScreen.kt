@@ -18,16 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldColors
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,27 +33,35 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.memomate.R
 import com.example.memomate.room.Notes
 import com.example.memomate.viewmodel.NotesViewModel
-import java.time.format.TextStyle
 
 
 @RequiresApi(Build.VERSION_CODES.O)
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreateNoteScreen(navController: NavController) {
+fun CreateNoteScreen(notesViewModel: NotesViewModel, navController: NavController) {
 
-    val viewModel = NotesViewModel()
+    val data = notesViewModel.noteObj
 
     var title by remember {
-        mutableStateOf("")
+        if (data?.isEdit == true) {
+            mutableStateOf(data.title)
+        } else {
+            mutableStateOf("")
+        }
     }
 
     var desc by remember {
-        mutableStateOf("")
+        if (data?.isEdit == true) {
+            mutableStateOf(data.desc)
+        } else {
+            mutableStateOf("")
+        }
     }
+
+
+
     Column(
         modifier = Modifier
             .background(Color.Black)
@@ -106,8 +105,14 @@ fun CreateNoteScreen(navController: NavController) {
                     .background(Color.DarkGray, shape = RoundedCornerShape(5.dp))
                     .padding(5.dp)
                     .clickable {
-                        viewModel.createNote(Notes(0, title, desc))
-                        navController.popBackStack()
+                        if (data?.isEdit == true) {
+                            notesViewModel.updateNote(Notes(data.id, title, desc))
+                            navController.popBackStack("HomeScreen", inclusive = false)
+                        } else {
+                            notesViewModel.createNote(Notes(0, title, desc))
+                            navController.popBackStack()
+                        }
+
                     }
             ) {
                 Image(
@@ -118,7 +123,7 @@ fun CreateNoteScreen(navController: NavController) {
             }
         }
 
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(40.dp))
 
         Box(
             modifier = Modifier
@@ -141,7 +146,10 @@ fun CreateNoteScreen(navController: NavController) {
                 value = title,
                 onValueChange = { newText -> title = newText },
                 cursorBrush = SolidColor(Color.White),
-                textStyle = androidx.compose.ui.text.TextStyle(color = Color.White, fontSize = 30.sp),
+                textStyle = androidx.compose.ui.text.TextStyle(
+                    color = Color.White,
+                    fontSize = 30.sp
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -170,7 +178,10 @@ fun CreateNoteScreen(navController: NavController) {
                 value = desc,
                 onValueChange = { newText -> desc = newText },
                 cursorBrush = SolidColor(Color.White),
-                textStyle = androidx.compose.ui.text.TextStyle(color = Color.White, fontSize = 25.sp),
+                textStyle = androidx.compose.ui.text.TextStyle(
+                    color = Color.White,
+                    fontSize = 25.sp
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -264,7 +275,10 @@ fun CreateNoteScreen_Preview() {
                 value = text,
                 onValueChange = { newText -> text = newText },
                 cursorBrush = SolidColor(Color.White),
-                textStyle = androidx.compose.ui.text.TextStyle(color = Color.White, fontSize = 30.sp),
+                textStyle = androidx.compose.ui.text.TextStyle(
+                    color = Color.White,
+                    fontSize = 30.sp
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -293,7 +307,10 @@ fun CreateNoteScreen_Preview() {
                 value = text,
                 onValueChange = { newText -> text = newText },
                 cursorBrush = SolidColor(Color.White),
-                textStyle = androidx.compose.ui.text.TextStyle(color = Color.White, fontSize = 25.sp),
+                textStyle = androidx.compose.ui.text.TextStyle(
+                    color = Color.White,
+                    fontSize = 25.sp
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
             )
