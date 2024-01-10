@@ -74,6 +74,7 @@ fun CreateNoteScreen(navController: NavController) {
                 modifier = Modifier
                     .background(Color.DarkGray, shape = RoundedCornerShape(5.dp))
                     .padding(5.dp)
+                    .clickable { navController.popBackStack() }
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.leftchevron),
@@ -104,10 +105,10 @@ fun CreateNoteScreen(navController: NavController) {
                 modifier = Modifier
                     .background(Color.DarkGray, shape = RoundedCornerShape(5.dp))
                     .padding(5.dp)
-//                    .clickable {
-//                        viewModel.createNote(Notes(0, title, desc))
-//                        navController.popBackStack()
-//                    }
+                    .clickable {
+                        viewModel.createNote(Notes(0, title, desc))
+                        navController.popBackStack()
+                    }
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.save),
@@ -146,7 +147,7 @@ fun CreateNoteScreen(navController: NavController) {
             )
         }
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
         Box(
             modifier = Modifier
@@ -178,7 +179,6 @@ fun CreateNoteScreen(navController: NavController) {
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateNoteScreen_Preview() {
 
@@ -230,10 +230,6 @@ fun CreateNoteScreen_Preview() {
                 modifier = Modifier
                     .background(Color.DarkGray, shape = RoundedCornerShape(5.dp))
                     .padding(5.dp)
-//                    .clickable {
-//                        viewModel.createNote(Notes(0, title, desc))
-//                        navController.popBackStack()
-//                    }
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.save),
