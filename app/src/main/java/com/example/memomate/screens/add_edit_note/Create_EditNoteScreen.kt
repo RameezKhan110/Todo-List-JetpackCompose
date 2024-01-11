@@ -1,4 +1,4 @@
-package com.example.memomate.screens.add_note
+package com.example.memomate.screens.add_edit_note
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -60,6 +60,27 @@ fun CreateNoteScreen(notesViewModel: NotesViewModel, navController: NavControlle
         }
     }
 
+    var showDialog by remember {
+        mutableStateOf(false)
+    }
+
+    if (showDialog) {
+        CustomDialog(dialogText = "Save Changes", setDialog = { showDialog = it }, onButtonClick = {
+            if (it) {
+                if (data != null) {
+                    notesViewModel.updateNote(Notes(data.id, title, desc))
+                }
+                navController.popBackStack("HomeScreen", inclusive = false)
+                data?.isEdit = false
+            } else {
+                showDialog = false
+                navController.popBackStack()
+            }
+        })
+    }
+
+
+
 
 
     Column(
@@ -73,12 +94,20 @@ fun CreateNoteScreen(notesViewModel: NotesViewModel, navController: NavControlle
                 modifier = Modifier
                     .background(Color.DarkGray, shape = RoundedCornerShape(5.dp))
                     .padding(5.dp)
-                    .clickable { navController.popBackStack() }
+                    .clickable {
+                        if (data?.isEdit == true) {
+                            showDialog = true
+                        } else {
+                            navController.popBackStack()
+                        }
+
+                    }
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.leftchevron),
                     contentDescription = "left chevron",
                     colorFilter = ColorFilter.tint(Color.White)
+
                 )
             }
 
@@ -108,6 +137,7 @@ fun CreateNoteScreen(notesViewModel: NotesViewModel, navController: NavControlle
                         if (data?.isEdit == true) {
                             notesViewModel.updateNote(Notes(data.id, title, desc))
                             navController.popBackStack("HomeScreen", inclusive = false)
+                            data.isEdit = false
                         } else {
                             notesViewModel.createNote(Notes(0, title, desc))
                             navController.popBackStack()
@@ -211,6 +241,7 @@ fun CreateNoteScreen_Preview() {
                 modifier = Modifier
                     .background(Color.DarkGray, shape = RoundedCornerShape(5.dp))
                     .padding(5.dp)
+
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.leftchevron),
