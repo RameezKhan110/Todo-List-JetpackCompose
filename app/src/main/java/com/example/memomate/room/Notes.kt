@@ -10,5 +10,5 @@ data class Notes(
     val id: Int,
     val title: String,
     val desc: String,
-    val isEdit: Boolean = false
+    var isEdit: Boolean = false
 )
