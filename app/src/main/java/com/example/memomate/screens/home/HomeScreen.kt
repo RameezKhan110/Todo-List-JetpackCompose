@@ -47,6 +47,7 @@ import androidx.navigation.navArgument
 import com.example.memomate.R
 import com.example.memomate.screens.add_edit_note.CreateNoteScreen
 import com.example.memomate.screens.detail_note.NoteDetailScreen
+import com.example.memomate.screens.search_note.SearchNoteScreen
 import com.example.memomate.viewmodel.NotesViewModel
 
 
@@ -80,6 +81,9 @@ fun HomeScreen(notesViewModel: NotesViewModel, navController: NavController) {
                 modifier = Modifier
                     .background(Color.DarkGray, shape = RoundedCornerShape(5.dp))
                     .padding(5.dp)
+                    .clickable {
+                        navController.navigate("SearchNoteScreen")
+                    }
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.search),
@@ -164,6 +168,9 @@ fun NavigationComponent() {
             if (id != null) {
                 NoteDetailScreen(notesViewModel, id, navController)
             }
+        }
+        composable("SearchNoteScreen") {
+            SearchNoteScreen(notesViewModel, navController)
         }
     }
 }

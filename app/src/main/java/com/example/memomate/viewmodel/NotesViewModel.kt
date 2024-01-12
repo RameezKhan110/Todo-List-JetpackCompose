@@ -22,6 +22,7 @@ class NotesViewModel : ViewModel() {
     private val notesRepo = NotesRepository(dao)
 
     var noteObj: Notes? = null
+    val allNotes: List<Notes>? = null
 
     private val _currentNote = MutableStateFlow<Notes?>(null)
     val currentNote: StateFlow<Notes?> = _currentNote
