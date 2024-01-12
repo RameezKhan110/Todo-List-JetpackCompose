@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -21,6 +23,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -93,8 +96,8 @@ fun HomeScreen(notesViewModel: NotesViewModel, navController: NavController) {
                     .padding(5.dp)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.info),
-                    contentDescription = "info",
+                    painter = painterResource(id = R.drawable.dots),
+                    contentDescription = "dots",
                     colorFilter = ColorFilter.tint(Color.White)
                 )
             }
@@ -122,17 +125,17 @@ fun HomeScreen(notesViewModel: NotesViewModel, navController: NavController) {
                     }
                 })
 
-            FloatingActionButton(
-                shape = CircleShape,
-                onClick = {
-                    navController.navigate("CreateNoteScreen")
-                },
+            Box(
                 modifier = Modifier
                     .offset(x = (-25).dp, y = (-40).dp)
                     .align(Alignment.BottomEnd)
-                    .size(56.dp)
+                    .clickable {
+                        navController.navigate("CreateNoteScreen")
+                    }
+                    .background(color = Color(0xFFFF9E9E), shape = CircleShape)
+
             ) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = null, tint = Color.Blue)
+                Icon(imageVector = Icons.Default.Add, contentDescription = null, tint = Color.Black, modifier = Modifier.padding(15.dp))
             }
         }
     }
