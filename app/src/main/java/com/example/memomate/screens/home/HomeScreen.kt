@@ -170,7 +170,7 @@ fun NavigationComponent() {
             }
         }
         composable("SearchNoteScreen") {
-            SearchNoteScreen()
+            SearchNoteScreen(notesViewModel, navController)
         }
     }
 }
