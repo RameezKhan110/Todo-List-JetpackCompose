@@ -1,6 +1,7 @@
 package com.example.memomate.screens.add_edit_note
 
 import android.os.Build
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -89,6 +91,9 @@ fun CreateNoteScreen(notesViewModel: NotesViewModel, navController: NavControlle
             .padding(vertical = 20.dp, horizontal = 10.dp)
             .fillMaxSize()
     ) {
+
+        val context = LocalContext.current
+
         Row(horizontalArrangement = Arrangement.End) {
             Box(
                 modifier = Modifier
@@ -139,8 +144,22 @@ fun CreateNoteScreen(notesViewModel: NotesViewModel, navController: NavControlle
                             navController.popBackStack("HomeScreen", inclusive = false)
                             data.isEdit = false
                         } else {
-                            notesViewModel.createNote(Notes(0, title, desc))
-                            navController.popBackStack()
+                            if (title.isEmpty() && desc.isEmpty()) {
+                                Toast
+                                    .makeText(
+                                        context,
+                                        "There's nothing to save",
+                                        Toast.LENGTH_LONG
+                                    )
+                                    .show()
+                            } else if (title.isEmpty()) {
+                                Toast
+                                    .makeText(context, "Title can't be empty", Toast.LENGTH_LONG)
+                                    .show()
+                            } else {
+                                notesViewModel.createNote(Notes(0, title, desc))
+                                navController.popBackStack()
+                            }
                         }
 
                     }
