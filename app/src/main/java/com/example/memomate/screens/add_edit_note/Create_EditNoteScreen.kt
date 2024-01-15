@@ -152,9 +152,9 @@ fun CreateNoteScreen(notesViewModel: NotesViewModel, navController: NavControlle
                                         Toast.LENGTH_LONG
                                     )
                                     .show()
-                            } else if (title.isEmpty()) {
+                            } else if (title.isEmpty() || desc.isEmpty()) {
                                 Toast
-                                    .makeText(context, "Title can't be empty", Toast.LENGTH_LONG)
+                                    .makeText(context, "Field's can't be empty", Toast.LENGTH_LONG)
                                     .show()
                             } else {
                                 notesViewModel.createNote(Notes(0, title, desc))
