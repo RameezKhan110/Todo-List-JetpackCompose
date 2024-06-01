@@ -37,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavType
@@ -58,8 +59,7 @@ fun HomeScreen(notesViewModel: NotesViewModel, navController: NavController) {
 //        notesViewModel.getNotes
 //    }.collectAsState()
     notesViewModel.getAllNotes()
-    val notesList = notesViewModel.getNotes.collectAsState()
-
+    val notesList = notesViewModel.getNotes.collectAsStateWithLifecycle()
 
 
     Column(
